@@ -32,6 +32,7 @@ a { color: inherit; text-decoration: none; }
 /* botones */
 .btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; min-height: 48px; padding: 0 22px; border-radius: 12px; font-weight: 700; white-space: nowrap; border: 0; cursor: pointer;
   color: var(--acc-ink); background: linear-gradient(135deg, var(--acc), var(--acc2)); box-shadow: 0 14px 30px -14px var(--acc); transition: transform .15s, box-shadow .15s; }
+.btn:disabled { opacity: .6; cursor: wait; }
 .btn:hover { transform: translateY(-1px); box-shadow: 0 18px 36px -14px var(--acc); }
 .btn.sec { background: none; color: var(--ink); border: 1px solid var(--line); box-shadow: none; }
 .btn.sec:hover { border-color: var(--acc); }
@@ -145,6 +146,40 @@ footer .logo svg { width: 30px; height: 30px; }
   .t-pie > div { padding: 10px 12px; }
 }
 @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } .btn { transition: none; } }
+[hidden] { display: none !important; }
+/* ── Aprendizaje (sección pequeña + formulario en ventana) ── */
+.aprende { padding-block: 0 clamp(48px, 7vw, 80px); }
+.aprende .caja { display: flex; align-items: center; justify-content: space-between; gap: 18px 28px; flex-wrap: wrap; max-width: 860px; margin-inline: auto;
+  padding: 22px 26px; border-radius: 18px; background: var(--panel); border: 1px solid var(--line); }
+.aprende .txt { display: flex; align-items: center; gap: 16px; min-width: 0; flex: 1 1 320px; }
+.aprende .ico { flex: none; width: 46px; height: 46px; border-radius: 14px; display: grid; place-items: center; color: var(--acc); background: rgb(34 211 238 / .08); border: 1px solid rgb(34 211 238 / .3); }
+.aprende h3 { margin: 0; font-size: 1.05rem; font-weight: 800; }
+.aprende p { margin: 2px 0 0; color: var(--muted); font-size: .9rem; }
+.velo { position: fixed; inset: 0; z-index: 30; display: grid; place-items: center; background: rgb(3 5 10 / .72); backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px);
+  padding-block: max(16px, env(safe-area-inset-top, 0px)) max(16px, env(safe-area-inset-bottom, 0px)); padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
+.modal { position: relative; width: 100%; max-width: 480px; max-height: 100%; overflow-y: auto; padding: 26px 24px 22px; border-radius: 20px; background: var(--panel); border: 1px solid var(--line);
+  box-shadow: 0 40px 90px -30px #000; display: grid; gap: 16px; }
+.modal h3 { margin: 0; font-size: 1.15rem; font-weight: 800; }
+.modal .sub { margin: -10px 0 0; color: var(--muted); font-size: .88rem; }
+.cerrar { position: absolute; top: 14px; right: 14px; width: 36px; height: 36px; border-radius: 10px; border: 1px solid var(--line); background: none; color: var(--muted); cursor: pointer; display: grid; place-items: center; }
+.cerrar:hover { color: var(--ink); border-color: var(--acc); }
+.form { display: grid; gap: 14px; }
+.fila2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.campo { display: grid; gap: 6px; min-width: 0; }
+.campo label { font-size: .8rem; font-weight: 600; color: var(--muted); }
+.campo input, .campo textarea { width: 100%; font: inherit; color: var(--ink); background: var(--bg); border: 1px solid var(--line); border-radius: 12px; padding: 11px 13px; min-height: 46px; font-size: 16px; }
+.campo textarea { min-height: 92px; resize: vertical; }
+.campo input:focus, .campo textarea:focus { outline: 2px solid var(--acc); outline-offset: 1px; border-color: transparent; }
+.niveles { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; }
+.niveles button { min-height: 44px; border-radius: 12px; border: 1px solid var(--line); background: var(--bg); color: var(--muted); font: inherit; font-weight: 700; font-size: .86rem; cursor: pointer; }
+.niveles button[aria-pressed="true"] { color: var(--acc-ink); border-color: transparent; background: linear-gradient(135deg, var(--acc), var(--acc2)); }
+.err { margin: 0; color: var(--down); font-size: .82rem; }
+.form .btn { width: 100%; }
+.listo { display: grid; justify-items: center; text-align: center; gap: 10px; padding-block: 10px; }
+.listo .ok { width: 60px; height: 60px; border-radius: 18px; display: grid; place-items: center; color: var(--up); background: rgb(34 197 94 / .12); border: 1px solid rgb(34 197 94 / .4); }
+.listo p { margin: 0; color: var(--muted); }
+@media (max-width: 520px) { .fila2 { grid-template-columns: 1fr; } .aprende .caja { padding: 20px; } .aprende .caja .btn { width: 100%; } }
+
 </style>
 </head>
 <body>
@@ -252,6 +287,15 @@ footer .logo svg { width: 30px; height: 30px; }
     </div>
   </section>
 
+  <section class="aprende" id="aprendizaje">
+    <div class="envoltura">
+      <div class="caja">
+        <div class="txt"><span class="ico"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 10 12 5 2 10l10 5 10-5Z"/><path d="M6 12v5c0 1 3 3 6 3s6-2 6-3v-5"/></svg></span><div><h3>Aprendizaje</h3><p>¿Quieres prepararte antes de tu reto? Cuéntanos tu nivel y qué te gustaría aprender.</p></div></div>
+        <button class="btn sec" type="button" data-abrir-aprende>Solicitar información</button>
+      </div>
+    </div>
+  </section>
+
   <section class="cierre">
     <div class="envoltura">
       <h2>Empieza hoy con la cuenta que va contigo</h2>
@@ -280,6 +324,92 @@ footer .logo svg { width: 30px; height: 30px; }
   </div>
 </footer>
 
+<div class="velo" id="velo" hidden>
+  <div class="modal" role="dialog" aria-modal="true" aria-labelledby="ap_t">
+    <button class="cerrar" type="button" id="ap_cerrar" aria-label="Cerrar"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M6 6l12 12M18 6 6 18"/></svg></button>
+    <div id="ap_form_vista" class="form">
+      <h3 id="ap_t">Aprendizaje</h3>
+      <p class="sub">Déjanos tus datos y te contactamos por correo con la información.</p>
+      <form class="form" id="ap_form" novalidate>
+        <input type="text" id="ap_web" name="web" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px;width:1px;height:1px;opacity:0">
+        <div class="fila2">
+          <div class="campo"><label for="ap_nombre">Nombre(s)</label><input id="ap_nombre" autocomplete="given-name" placeholder="Ej. Carlos"></div>
+          <div class="campo"><label for="ap_apellido">Apellidos</label><input id="ap_apellido" autocomplete="family-name" placeholder="Ej. Ramírez López"></div>
+        </div>
+        <div class="fila2">
+          <div class="campo"><label for="ap_correo">Correo</label><input id="ap_correo" type="email" autocomplete="email" placeholder="tucorreo@ejemplo.com"></div>
+          <div class="campo"><label for="ap_tel">Teléfono</label><input id="ap_tel" type="tel" autocomplete="tel" placeholder="Ej. 55 1234 5678"></div>
+        </div>
+        <div class="campo"><label id="ap_nivel_l">Tu nivel de trading</label>
+          <div class="niveles" role="group" aria-labelledby="ap_nivel_l">
+            <button type="button" data-nivel="Principiante" aria-pressed="false">Principiante</button>
+            <button type="button" data-nivel="Intermedio" aria-pressed="false">Intermedio</button>
+            <button type="button" data-nivel="Avanzado" aria-pressed="false">Avanzado</button>
+          </div>
+        </div>
+        <div class="campo"><label for="ap_tema">¿Qué te gustaría aprender?</label><textarea id="ap_tema" maxlength="600" placeholder="Ej. Análisis técnico, gestión de riesgo, cómo pasar las fases del reto…"></textarea></div>
+        <p class="err" id="ap_err" hidden></p>
+        <button class="btn" type="submit" id="ap_enviar">Enviar solicitud</button>
+      </form>
+    </div>
+    <div class="listo" id="ap_listo" hidden>
+      <div class="ok"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg></div>
+      <h3>Solicitud enviada</h3>
+      <p>Gracias, <b id="ap_quien"></b>. Te escribiremos a tu correo con la información de aprendizaje.</p>
+      <button class="btn sec" type="button" id="ap_ok">Cerrar</button>
+    </div>
+  </div>
+</div>
+
+<script>
+// Aprendizaje: formulario en ventana. La solicitud va al Apps Script de ATTM, que la manda por correo.
+const URL_APPS_SCRIPT = "PEGAR_AQUI_LA_URL_DEL_APPS_SCRIPT";
+(function () {
+  const velo = document.getElementById("velo"), f = document.getElementById("ap_form"), err = document.getElementById("ap_err"), btn = document.getElementById("ap_enviar");
+  let nivel = "";
+  const abrir = () => { velo.hidden = false; document.getElementById("ap_form_vista").hidden = false; document.getElementById("ap_listo").hidden = true; err.hidden = true; setTimeout(() => document.getElementById("ap_nombre").focus(), 30); };
+  const cerrar = () => { velo.hidden = true; };
+  document.querySelectorAll("[data-abrir-aprende]").forEach(b => b.addEventListener("click", abrir));
+  document.getElementById("ap_cerrar").addEventListener("click", cerrar);
+  document.getElementById("ap_ok").addEventListener("click", cerrar);
+  velo.addEventListener("click", e => { if (e.target === velo) cerrar(); });
+  addEventListener("keydown", e => { if (e.key === "Escape" && !velo.hidden) cerrar(); });
+  document.querySelectorAll("[data-nivel]").forEach(b => b.addEventListener("click", () => {
+    nivel = b.dataset.nivel; document.querySelectorAll("[data-nivel]").forEach(x => x.setAttribute("aria-pressed", x === b ? "true" : "false"));
+  }));
+  const mostrarError = msg => { err.textContent = msg; err.hidden = !msg; };
+  f.addEventListener("submit", async e => {
+    e.preventDefault();
+    const v = id => document.getElementById(id).value.trim();
+    let msg = "";
+    if (!v("ap_nombre") || !v("ap_apellido")) msg = "Escribe tu nombre y apellidos.";
+    else if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(v("ap_correo"))) msg = "Escribe un correo válido.";
+    else if (v("ap_tel").replace(/\D/g, "").length < 10) msg = "Escribe un teléfono de al menos 10 dígitos.";
+    else if (!nivel) msg = "Elige tu nivel de trading.";
+    else if (v("ap_tema").length < 3) msg = "Cuéntanos qué te gustaría aprender.";
+    mostrarError(msg);
+    if (msg) return;
+    btn.disabled = true; btn.textContent = "Enviando…";
+    try {
+      const r = await fetch(URL_APPS_SCRIPT, {
+        method: "POST",
+        headers: { "Content-Type": "text/plain;charset=utf-8" },
+        body: JSON.stringify({ accion: "solicitud_aprendizaje", origen: "Landing", web: v("ap_web"), nombre: v("ap_nombre"), apellido: v("ap_apellido"),
+          email: v("ap_correo"), telefono: v("ap_tel"), nivel, tema: v("ap_tema") })
+      });
+      const d = await r.json();
+      if (!d.success) throw new Error(d.error || "");
+      document.getElementById("ap_quien").textContent = v("ap_nombre");
+      document.getElementById("ap_form_vista").hidden = true; document.getElementById("ap_listo").hidden = false;
+      f.reset(); nivel = ""; document.querySelectorAll("[data-nivel]").forEach(x => x.setAttribute("aria-pressed", "false"));
+    } catch (x) {
+      mostrarError(x.message || "No se pudo enviar tu solicitud. Revisa tu conexión e inténtalo de nuevo.");
+    } finally {
+      btn.disabled = false; btn.textContent = "Enviar solicitud";
+    }
+  });
+})();
+</script>
 <script>
 document.getElementById("anio").textContent = new Date().getFullYear();
 // Velas de muestra en la vista de la terminal (dibujo decorativo, no son precios reales).
