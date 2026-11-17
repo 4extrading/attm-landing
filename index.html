@@ -1,0 +1,312 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>ATTM · Cuentas de trading desde 50 USD</title>
+<meta name="description" content="Opera una cuenta de hasta $1,500 sin arriesgar tu capital. Elige ALPHA, BETA o GAMMA, supera las fases y llega a la cuenta fondeada.">
+<meta name="theme-color" content="#070A12">
+<meta property="og:title" content="ATTM · Cuentas de trading desde 50 USD">
+<meta property="og:description" content="Opera una cuenta de hasta $1,500 sin arriesgar tu capital.">
+<meta property="og:type" content="website">
+<link rel="icon" type="image/png" href="favicon_32.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;600&display=swap">
+<style>
+/* Landing de ATTM: barra fija, portada dividida (texto + vista de la terminal con velas), tipos de cuenta en tres tarjetas, cierre con botón y aviso de riesgo.
+   Mismo diseño oscuro de la plataforma (login dividido). */
+:root {
+  --bg: #070A12; --panel: #0E1320; --panel2: #131A2B; --line: #1F2840; --ink: #EAF0FA; --muted: #8C97AD;
+  --acc: #22D3EE; --acc2: #0EA5E9; --acc-ink: #04121A; --up: #22C55E; --down: #F43F5E;
+  --font: "Plus Jakarta Sans", system-ui, -apple-system, "Segoe UI", sans-serif; --mono: "JetBrains Mono", ui-monospace, Menlo, monospace;
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body { margin: 0; background: var(--bg); color: var(--ink); font: 15px/1.6 var(--font); -webkit-font-smoothing: antialiased; }
+a { color: inherit; text-decoration: none; }
+:is(a, button):focus-visible { outline: 2px solid var(--acc); outline-offset: 3px; border-radius: 10px; }
+.envoltura { width: 100%; max-width: 1160px; margin-inline: auto; padding-left: max(20px, env(safe-area-inset-left, 0px)); padding-right: max(20px, env(safe-area-inset-right, 0px)); }
+
+/* botones */
+.btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; min-height: 48px; padding: 0 22px; border-radius: 12px; font-weight: 700; white-space: nowrap; border: 0; cursor: pointer;
+  color: var(--acc-ink); background: linear-gradient(135deg, var(--acc), var(--acc2)); box-shadow: 0 14px 30px -14px var(--acc); transition: transform .15s, box-shadow .15s; }
+.btn:hover { transform: translateY(-1px); box-shadow: 0 18px 36px -14px var(--acc); }
+.btn.sec { background: none; color: var(--ink); border: 1px solid var(--line); box-shadow: none; }
+.btn.sec:hover { border-color: var(--acc); }
+.btn.chico { min-height: 40px; padding: 0 16px; font-size: .88rem; }
+
+/* barra */
+body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px); z-index: 10; background: var(--bg); }
+.barra { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 9; background: rgb(7 10 18 / .82); backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px); border-bottom: 1px solid var(--line); }
+.barra .envoltura { display: flex; align-items: center; justify-content: space-between; gap: 16px; min-height: 68px; }
+.logo { display: flex; align-items: center; gap: 11px; }
+.logo svg { width: 38px; height: 38px; flex: none; }
+.logo b { display: block; font-weight: 800; letter-spacing: .2em; font-size: 1rem; line-height: 1.1; }
+.logo small { display: block; color: var(--muted); font-size: .58rem; font-weight: 600; letter-spacing: .24em; }
+.barra nav { display: flex; align-items: center; gap: 8px; }
+.barra nav .enl { color: var(--muted); font-weight: 600; font-size: .9rem; padding: 8px 12px; }
+.barra nav .enl:hover { color: var(--ink); }
+
+/* portada */
+.portada { position: relative; overflow: hidden; border-bottom: 1px solid var(--line);
+  background: radial-gradient(700px 460px at 12% 10%, rgb(34 211 238 / .12), transparent 65%), radial-gradient(640px 480px at 92% 85%, rgb(14 165 233 / .12), transparent 65%), linear-gradient(160deg, #0B1630, #070A12 70%); }
+.portada .envoltura { display: grid; grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr); gap: clamp(28px, 5vw, 64px); align-items: center; padding-block: clamp(48px, 8vw, 96px); }
+.etiqueta { display: inline-flex; align-items: center; gap: 8px; padding: 6px 12px; border-radius: 999px; border: 1px solid rgb(34 211 238 / .35); background: rgb(34 211 238 / .08);
+  color: var(--acc); font-size: .74rem; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; }
+.etiqueta i { width: 7px; height: 7px; border-radius: 50%; background: var(--up); box-shadow: 0 0 0 4px rgb(34 197 94 / .18); }
+.portada h1 { margin: 18px 0 0; font-size: clamp(2.1rem, 4.6vw, 3.5rem); font-weight: 800; letter-spacing: -.025em; line-height: 1.06; text-wrap: balance; }
+.portada h1 span { background: linear-gradient(90deg, var(--acc), var(--acc2)); -webkit-background-clip: text; background-clip: text; color: transparent; }
+.portada p.lead { margin: 18px 0 0; color: var(--muted); font-size: 1.06rem; max-width: 46ch; }
+.acciones { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 28px; }
+.datos { display: grid; grid-template-columns: repeat(3, auto); justify-content: start; gap: 10px 32px; margin: 34px 0 0; padding: 0; list-style: none; }
+.datos b { display: block; font-family: var(--mono); font-size: 1.35rem; font-weight: 600; font-variant-numeric: tabular-nums; }
+.datos span { color: var(--muted); font-size: .8rem; }
+
+/* vista de la terminal */
+.terminal { position: relative; border-radius: 20px; background: rgb(14 19 32 / .85); border: 1px solid rgb(34 211 238 / .22); box-shadow: 0 40px 90px -40px rgb(34 211 238 / .4), 0 30px 60px -30px #000; overflow: hidden; min-width: 0; }
+.terminal::before { content: ""; position: absolute; left: 28px; right: 28px; top: -1px; height: 2px; background: linear-gradient(90deg, transparent, var(--acc), transparent); }
+.t-cab { display: flex; align-items: center; justify-content: space-between; gap: 10px; padding: 14px 18px; border-bottom: 1px solid var(--line); }
+.t-par { font-family: var(--mono); font-weight: 600; font-size: .9rem; }
+.t-par small { color: var(--muted); font-weight: 500; margin-left: 8px; }
+.t-precio { font-family: var(--mono); font-size: .9rem; color: var(--up); font-variant-numeric: tabular-nums; }
+.terminal canvas { display: block; width: 100%; height: 240px; }
+.t-pie { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); border-top: 1px solid var(--line); }
+.t-pie > div { padding: 12px 18px; display: grid; gap: 2px; min-width: 0; }
+.t-pie > div + div { border-left: 1px solid var(--line); }
+.t-pie span { color: var(--muted); font-size: .7rem; text-transform: uppercase; letter-spacing: .1em; font-weight: 600; }
+.t-pie b { font-family: var(--mono); font-weight: 600; font-variant-numeric: tabular-nums; font-size: .92rem; }
+.barra-meta { height: 6px; border-radius: 6px; background: var(--line); overflow: hidden; margin-top: 4px; }
+.barra-meta i { display: block; height: 100%; width: 64%; background: linear-gradient(90deg, var(--acc), var(--acc2)); }
+
+/* tipos de cuenta */
+.seccion { padding-block: clamp(56px, 8vw, 96px); }
+.titulo { text-align: center; display: grid; justify-items: center; gap: 10px; margin-bottom: 40px; }
+.titulo h2 { margin: 0; font-size: clamp(1.7rem, 3.2vw, 2.4rem); font-weight: 800; letter-spacing: -.02em; text-wrap: balance; }
+.titulo p { margin: 0; color: var(--muted); max-width: 56ch; }
+.planes { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 22px; align-items: stretch; }
+.plan { position: relative; display: grid; grid-template-rows: auto auto 1fr auto; gap: 18px; padding: 28px 24px 24px; border-radius: 20px; background: var(--panel); border: 1px solid var(--line); min-width: 0; }
+.plan.destacado { border: 1px solid transparent; background: linear-gradient(var(--panel), var(--panel)) padding-box, linear-gradient(150deg, var(--acc), rgb(31 40 64 / .7) 45%, var(--acc2)) border-box;
+  box-shadow: 0 30px 70px -36px rgb(34 211 238 / .5); }
+.sello { position: absolute; top: -12px; left: 50%; transform: translateX(-50%); padding: 4px 12px; border-radius: 999px; background: linear-gradient(135deg, var(--acc), var(--acc2)); color: var(--acc-ink);
+  font-size: .68rem; font-weight: 800; letter-spacing: .12em; text-transform: uppercase; white-space: nowrap; }
+.plan header { display: grid; gap: 4px; text-align: center; }
+.plan h3 { margin: 0; font-size: .95rem; font-weight: 800; letter-spacing: .26em; padding-left: .26em; color: var(--acc); }
+.precio { font-family: var(--mono); font-size: 2.6rem; font-weight: 600; line-height: 1.1; font-variant-numeric: tabular-nums; }
+.precio small { font-size: .9rem; color: var(--muted); font-weight: 500; margin-left: 4px; }
+.opera { text-align: center; padding: 14px; border-radius: 14px; background: var(--bg); border: 1px solid var(--line); }
+.opera span { display: block; color: var(--muted); font-size: .78rem; }
+.opera b { font-family: var(--mono); font-size: 1.5rem; font-weight: 600; color: var(--ink); font-variant-numeric: tabular-nums; }
+.reglas { list-style: none; margin: 0; padding: 0; display: grid; gap: 0; align-content: start; }
+.reglas li { display: flex; justify-content: space-between; gap: 12px; padding: 10px 2px; border-bottom: 1px dashed var(--line); font-size: .9rem; }
+.reglas li:last-child { border-bottom: 0; }
+.reglas li span { color: var(--muted); }
+.reglas li b { font-family: var(--mono); font-weight: 600; font-variant-numeric: tabular-nums; text-align: right; }
+.reglas li b.v { color: var(--up); }
+.plan .btn { width: 100%; }
+.nota { text-align: center; color: var(--muted); font-size: .85rem; margin: 26px auto 0; max-width: 62ch; }
+
+/* cierre */
+.cierre { border-top: 1px solid var(--line); background: radial-gradient(600px 300px at 50% 0%, rgb(34 211 238 / .12), transparent 70%); }
+.cierre .envoltura { display: grid; justify-items: center; text-align: center; gap: 14px; padding-block: clamp(56px, 8vw, 88px); }
+.cierre h2 { margin: 0; font-size: clamp(1.6rem, 3vw, 2.2rem); font-weight: 800; letter-spacing: -.02em; text-wrap: balance; max-width: 22ch; }
+.cierre p { margin: 0; color: var(--muted); max-width: 52ch; }
+.cierre .acciones { justify-content: center; margin-top: 10px; }
+
+footer { border-top: 1px solid var(--line); }
+footer .envoltura { display: grid; gap: 14px; padding-block: 28px 36px; justify-items: center; text-align: center; }
+footer p { margin: 0; color: var(--muted); font-size: .78rem; max-width: 90ch; }
+footer .logo svg { width: 30px; height: 30px; }
+.aviso { width: 100%; max-width: 820px; }
+.aviso summary { display: inline-flex; align-items: center; gap: 6px; cursor: pointer; list-style: none; padding: 6px 14px; border-radius: 999px; border: 1px solid var(--line); color: var(--muted); font-size: .76rem; font-weight: 600; }
+.aviso summary::-webkit-details-marker { display: none; }
+.aviso summary:hover { color: var(--ink); border-color: var(--acc); }
+.aviso summary svg { transition: transform .2s; }
+.aviso[open] summary svg { transform: rotate(180deg); }
+.aviso .texto { display: grid; gap: 10px; margin-top: 14px; padding: 18px 20px; border-radius: 14px; background: var(--panel); border: 1px solid var(--line); text-align: left; }
+.aviso .texto p { font-size: .74rem; line-height: 1.6; max-width: none; }
+
+@media (max-width: 960px) {
+  .portada .envoltura { grid-template-columns: 1fr; text-align: center; justify-items: center; }
+  .portada p.lead { margin-inline: auto; }
+  .acciones, .datos { justify-content: center; }
+  .terminal { width: 100%; max-width: 560px; }
+  .planes { grid-template-columns: 1fr; max-width: 440px; margin-inline: auto; gap: 30px; }
+}
+@media (max-width: 620px) {
+  .barra nav .enl { display: none; }
+  .logo small { display: none; }
+  .datos { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px 14px; width: 100%; }
+  .datos b { font-size: 1.1rem; }
+  .acciones { flex-direction: column; width: 100%; }
+  .acciones .btn { width: 100%; }
+  .terminal canvas { height: 190px; }
+  .t-pie > div { padding: 10px 12px; }
+}
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } .btn { transition: none; } }
+</style>
+</head>
+<body>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
+  <linearGradient id="g" x1="0" y1="1" x2="1" y2="0"><stop offset="0" stop-color="#0EA5E9"/><stop offset="1" stop-color="#22D3EE"/></linearGradient>
+  <linearGradient id="gn" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#132447"/><stop offset="1" stop-color="#0A1328"/></linearGradient>
+  <symbol id="iso" viewBox="0 0 100 100">
+    <rect width="100" height="100" rx="24" fill="url(#gn)"/><rect x=".75" y=".75" width="98.5" height="98.5" rx="23.3" fill="none" stroke="#22D3EE" stroke-opacity=".35" stroke-width="1.5"/>
+    <path d="M24 78 L46 24" stroke="#EAF0FA" stroke-width="10" stroke-linecap="round" fill="none"/><path d="M54 24 L76 78" stroke="url(#g)" stroke-width="10" stroke-linecap="round" fill="none"/>
+    <line x1="50" y1="46" x2="50" y2="72" stroke="#22D3EE" stroke-width="2.5" stroke-linecap="round"/><rect x="44.5" y="52" width="11" height="14" rx="2.5" fill="#22D3EE"/>
+  </symbol></defs></svg>
+
+<header class="barra">
+  <div class="envoltura">
+    <a class="logo" href="#inicio" aria-label="ATTM, inicio"><svg><use href="#iso"/></svg><div><b>ATTM</b><small>TRADING PLATFORM</small></div></a>
+    <nav>
+      <a class="enl" href="#cuentas">Tipos de cuenta</a>
+      <a class="enl" href="https://attm-platform.streamlit.app" target="_blank" rel="noopener">Iniciar sesión</a>
+      <a class="btn chico" href="https://attm-platform.streamlit.app" target="_blank" rel="noopener">Crear cuenta</a>
+    </nav>
+  </div>
+</header>
+
+<main id="inicio">
+  <section class="portada">
+    <div class="envoltura">
+      <div>
+        <span class="etiqueta"><i></i>Cuentas desde 50 USD</span>
+        <h1>Opera una cuenta de hasta <span>$1,500</span> sin arriesgar tu capital.</h1>
+        <p class="lead">Elige tu cuenta, supera las fases del reto y llega a la cuenta fondeada, donde te quedas con la mayor parte de la ganancia.</p>
+        <div class="acciones">
+          <a class="btn" href="https://attm-platform.streamlit.app" target="_blank" rel="noopener">Crear cuenta</a>
+          <a class="btn sec" href="#cuentas">Ver tipos de cuenta</a>
+        </div>
+        <ul class="datos">
+          <li><b>$50</b><span>Cuenta inicial</span></li>
+          <li><b>4</b><span>Fases del reto</span></li>
+          <li><b>80%</b><span>Ganancia para ti</span></li>
+        </ul>
+      </div>
+
+      <figure class="terminal" aria-label="Vista de la terminal de ATTM" style="margin:0">
+        <div class="t-cab"><div class="t-par">EUR/USD<small>M15</small></div><div class="t-precio" id="t_precio">1.0864</div></div>
+        <canvas id="velas"></canvas>
+        <div class="t-pie">
+          <div><span>Cuenta</span><b>ALPHA</b></div>
+          <div><span>Balance</span><b>$1,596</b></div>
+          <div><span>Meta fase 2</span><div class="barra-meta"><i></i></div></div>
+        </div>
+      </figure>
+    </div>
+  </section>
+
+  <section class="seccion" id="cuentas">
+    <div class="envoltura">
+      <div class="titulo">
+        <span class="etiqueta">Tipos de cuenta</span>
+        <h2>Paga una vez y opera con más capital</h2>
+        <p>Cada cuenta tiene sus propias reglas. Supera las fases y llegas a la cuenta fondeada con el capital de tu cuenta.</p>
+      </div>
+
+      <div class="planes">
+        <article class="plan">
+          <header><h3>GAMMA</h3><div class="precio">$50<small>USD</small></div></header>
+          <div class="opera"><span>Operas una cuenta de</span><b>$500</b></div>
+          <ul class="reglas">
+            <li><span>Meta por fase</span><b>15%</b></li>
+            <li><span>Pérdida diaria máx.</span><b>5%</b></li>
+            <li><span>Pérdida total máx.</span><b>10%</b></li>
+            <li><span>Fases</span><b>4</b></li>
+            <li><span>Ganancia fondeada</span><b class="v">60%</b></li>
+          </ul>
+          <a class="btn sec" href="https://attm-platform.streamlit.app" target="_blank" rel="noopener">Elegir GAMMA</a>
+        </article>
+
+        <article class="plan">
+          <header><h3>BETA</h3><div class="precio">$100<small>USD</small></div></header>
+          <div class="opera"><span>Operas una cuenta de</span><b>$1,000</b></div>
+          <ul class="reglas">
+            <li><span>Meta por fase</span><b>12%</b></li>
+            <li><span>Pérdida diaria máx.</span><b>5%</b></li>
+            <li><span>Pérdida total máx.</span><b>10%</b></li>
+            <li><span>Fases</span><b>4</b></li>
+            <li><span>Ganancia fondeada</span><b class="v">70%</b></li>
+          </ul>
+          <a class="btn sec" href="https://attm-platform.streamlit.app" target="_blank" rel="noopener">Elegir BETA</a>
+        </article>
+        <article class="plan destacado">
+          <span class="sello">Más capital</span>
+          <header><h3>ALPHA</h3><div class="precio">$250<small>USD</small></div></header>
+          <div class="opera"><span>Operas una cuenta de</span><b>$1,500</b></div>
+          <ul class="reglas">
+            <li><span>Meta por fase</span><b>10%</b></li>
+            <li><span>Pérdida diaria máx.</span><b>4%</b></li>
+            <li><span>Pérdida total máx.</span><b>8%</b></li>
+            <li><span>Fases</span><b>4</b></li>
+            <li><span>Ganancia fondeada</span><b class="v">80%</b></li>
+          </ul>
+          <a class="btn" href="https://attm-platform.streamlit.app" target="_blank" rel="noopener">Elegir ALPHA</a>
+        </article>
+
+      </div>
+      <p class="nota">Si pierdes una fase, puedes reiniciarla una vez sin regresar a la fase anterior. Para crear tu cuenta necesitas el código de registro que te da tu asesor.</p>
+    </div>
+  </section>
+
+  <section class="cierre">
+    <div class="envoltura">
+      <h2>Empieza hoy con la cuenta que va contigo</h2>
+      <p>Crea tu cuenta, elige tu plan y comienza la Fase 1 desde la terminal de ATTM.</p>
+      <div class="acciones">
+        <a class="btn" href="https://attm-platform.streamlit.app" target="_blank" rel="noopener">Crear cuenta</a>
+        <a class="btn sec" href="https://attm-platform.streamlit.app" target="_blank" rel="noopener">Ya tengo cuenta</a>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="envoltura">
+    <a class="logo" href="#inicio" aria-label="ATTM, inicio"><svg><use href="#iso"/></svg><div><b>ATTM</b><small>TRADING PLATFORM</small></div></a>
+    <p>Operar en los mercados financieros tiene riesgo. Los resultados pasados no garantizan resultados futuros. Las cuentas del reto son de evaluación y sus reglas pueden cambiar.</p>
+    <details class="aviso">
+      <summary>Aviso de responsabilidad <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></summary>
+      <div class="texto">
+        <p>ATTM no es una empresa de servicios financieros ni un bróker, sino una plataforma que proporciona herramientas para la formación técnica de traders, cobrando una comisión por ello y compensando a los mejores traders en condiciones muy específicas. En ningún caso recibe fondos de terceros como plataforma de inversión o custodia, ni gestiona capital. Ninguna información contenida en el sitio web proporciona ni debe considerarse asesoramiento de inversión o apoyo para ninguna decisión de inversión. Además, las actividades de trading son de alto riesgo y no son adecuadas para todos los inversores. Los resultados pasados no son indicativos de resultados futuros.</p>
+        <p>El uso de la información contenida en los sitios web y redes sociales de ATTM es bajo su propia responsabilidad. No se asume ninguna responsabilidad por el uso o mal uso de dicha información por parte de terceros. Todo el contenido publicado por ATTM y su empresa de apoyo debe considerarse únicamente como información general.</p>
+        <p>Lea la declaración de riesgos de cualquier bróker antes de operar con su capital. Los CFD son instrumentos complejos y conllevan un alto riesgo de pérdida rápida de capital debido a su apalancamiento. Debe considerar si comprende cómo funcionan los CFD y si puede permitirse asumir un alto riesgo de perder su capital. Consulte los avisos del regulador de su domicilio fiscal para obtener más información y acuda a profesionales acreditados para que le proporcionen asesoramiento financiero en caso de duda.</p>
+      </div>
+    </details>
+    <p>© <span id="anio">2026</span> ATTM Forex Capital Markets</p>
+  </div>
+</footer>
+
+<script>
+document.getElementById("anio").textContent = new Date().getFullYear();
+// Velas de muestra en la vista de la terminal (dibujo decorativo, no son precios reales).
+(function () {
+  const cv = document.getElementById("velas"), ctx = cv.getContext("2d"), precio = document.getElementById("t_precio");
+  let semilla = 7; const azar = () => (semilla = (semilla * 9301 + 49297) % 233280) / 233280;
+  const velas = []; let p = 1.0820;
+  for (let i = 0; i < 60; i++) { const a = p, c = a + (azar() - .44) * .0016; velas.push({ a, c, h: Math.max(a, c) + azar() * .0007, l: Math.min(a, c) - azar() * .0007 }); p = c; }
+  const reducir = matchMedia("(prefers-reduced-motion: reduce)").matches;
+  function dibujar() {
+    const r = devicePixelRatio || 1, w = cv.clientWidth, h = cv.clientHeight; cv.width = w * r; cv.height = h * r; ctx.setTransform(r, 0, 0, r, 0, 0); ctx.clearRect(0, 0, w, h);
+    const n = Math.max(24, Math.min(velas.length, Math.floor(w / 11))), vs = velas.slice(-n);
+    const max = Math.max(...vs.map(v => v.h)), min = Math.min(...vs.map(v => v.l)), y = v => 14 + (max - v) / (max - min) * (h - 28), paso = w / n;
+    ctx.strokeStyle = "rgba(31,40,64,.6)"; ctx.lineWidth = 1;
+    for (let k = 1; k < 4; k++) { const gy = Math.round(h * k / 4) + .5; ctx.beginPath(); ctx.moveTo(0, gy); ctx.lineTo(w, gy); ctx.stroke(); }
+    vs.forEach((v, i) => {
+      const x = i * paso + paso / 2, col = v.c >= v.a ? "#22C55E" : "#F43F5E"; ctx.strokeStyle = col; ctx.fillStyle = col;
+      ctx.beginPath(); ctx.moveTo(Math.round(x) + .5, y(v.h)); ctx.lineTo(Math.round(x) + .5, y(v.l)); ctx.stroke();
+      const t = Math.min(y(v.a), y(v.c)); ctx.fillRect(x - paso * .32, t, paso * .64, Math.max(1.5, Math.abs(y(v.a) - y(v.c))));
+    });
+    const ul = vs[vs.length - 1], yy = y(ul.c); ctx.setLineDash([4, 4]); ctx.strokeStyle = "rgba(34,211,238,.7)"; ctx.beginPath(); ctx.moveTo(0, yy); ctx.lineTo(w, yy); ctx.stroke(); ctx.setLineDash([]);
+    precio.textContent = ul.c.toFixed(4); precio.style.color = ul.c >= ul.a ? "#22C55E" : "#F43F5E";
+  }
+  dibujar(); addEventListener("resize", dibujar);
+  if (!reducir) setInterval(() => { const ul = velas[velas.length - 1]; ul.c += (azar() - .47) * .0004; ul.h = Math.max(ul.h, ul.c); ul.l = Math.min(ul.l, ul.c);
+    if (azar() < .12) { const a = ul.c; velas.push({ a, c: a, h: a, l: a }); velas.shift(); } dibujar(); }, 900);
+})();
+</script>
+</body>
+</html>
