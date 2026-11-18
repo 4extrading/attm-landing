@@ -213,6 +213,15 @@ footer .logo svg { width: 30px; height: 30px; }
   .nos-fila.cab > div:first-child { display: none; }
   .nos-fila > div { padding: 10px 16px; }
 }
+
+/* ── Contacto en el pie ── */
+.contacto { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px 28px; margin: 0; padding: 0; list-style: none; font-size: .78rem; color: var(--muted); }
+.contacto li { display: inline-flex; align-items: center; gap: 7px; min-width: 0; }
+.contacto svg { flex: none; color: var(--acc); }
+.contacto b { color: var(--ink); font-weight: 600; }
+.contacto a { color: var(--muted); text-decoration: none; overflow-wrap: anywhere; }
+.contacto a:hover { color: var(--acc); }
+@media (max-width: 560px) { .contacto { flex-direction: column; align-items: center; } }
 </style>
 </head>
 <body>
@@ -374,6 +383,11 @@ footer .logo svg { width: 30px; height: 30px; }
 <footer>
   <div class="envoltura">
     <a class="logo" href="#inicio" aria-label="ATTM, inicio"><svg><use href="#iso"/></svg><div><b>ATTM</b><small>TRADING PLATFORM</small></div></a>
+    <ul class="contacto">
+      <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21s-7-6.1-7-11a7 7 0 0 1 14 0c0 4.9-7 11-7 11Z"/><circle cx="12" cy="10" r="2.5"/></svg><span><b>Origen:</b> London, Sheffield UK Centre, Reino Unido</span></li>
+      <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21s-7-6.1-7-11a7 7 0 0 1 14 0c0 4.9-7 11-7 11Z"/><circle cx="12" cy="10" r="2.5"/></svg><span><b>México:</b> Los Arcángeles 1545, Monterrey, Nuevo León</span></li>
+      <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg><a href="mailto:attmservice.sell@attm.com">attmservice.sell@attm.com</a></li>
+    </ul>
     <p>Operar en los mercados financieros tiene riesgo. Los resultados pasados no garantizan resultados futuros. Las cuentas del reto son de evaluación y sus reglas pueden cambiar.</p>
     <details class="aviso">
       <summary>Aviso de responsabilidad <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></summary>
