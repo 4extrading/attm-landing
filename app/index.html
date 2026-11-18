@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>ATTM</title>
+  <link rel="icon" type="image/png" href="icono-192.png">
+  <link rel="apple-touch-icon" href="icono-192.png">
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#070A12">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-title" content="ATTM">
+  <style>
+    html, body { margin: 0; padding: 0; height: 100%; overflow: hidden; background: #070A12; }
+    /* El marco mide 50px más que la pantalla para tapar la franja inferior de Streamlit */
+    iframe { border: none; width: 100%; height: calc(100vh + 50px); display: block; }
+  </style>
+</head>
+<body>
+  <iframe id="app" title="ATTM" allow="clipboard-write; fullscreen"></iframe>
+  <script>
+    // Dirección de la app de ATTM en Streamlit Cloud.
+    var APP = "https://attm-platform.streamlit.app";
+    var CLAVE = "attm_sesion";
+
+    // 1) Si la persona ya había iniciado sesión aquí, se le pasa su pase a la app (vale 12 horas; la app lo revisa).
+    var pase = "";
+    try { pase = localStorage.getItem(CLAVE) || ""; } catch (e) {}
+    var url = new URL(APP + "/");
+    url.searchParams.set("embed", "true");
+    if (pase) url.searchParams.set("s", pase);
+    document.getElementById("app").src = url.toString();
+
+    // 2) La app avisa cuando la persona inicia o cierra sesión (solo se acepta a la app de ATTM).
+    window.addEventListener("message", function (e) {
+      if (e.origin !== APP || !e.data) return;
+      try {
+        if (e.data.tipo === "attm-sesion" && e.data.s) localStorage.setItem(CLAVE, String(e.data.s));
+        if (e.data.tipo === "attm-salir") localStorage.removeItem(CLAVE);
+      } catch (err) {}
+    });
+  </script>
+</body>
+</html>
