@@ -180,6 +180,39 @@ footer .logo svg { width: 30px; height: 30px; }
 .listo p { margin: 0; color: var(--muted); }
 @media (max-width: 520px) { .fila2 { grid-template-columns: 1fr; } .aprende .caja { padding: 20px; } .aprende .caja .btn { width: 100%; } }
 
+
+/* ── Sobre nosotros ── */
+.nosotros { border-top: 1px solid var(--line); background: radial-gradient(700px 380px at 85% 10%, rgb(14 165 233 / .08), transparent 70%); }
+.nos-grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: clamp(28px, 5vw, 56px); align-items: start; }
+.nos-txt { display: grid; gap: 16px; }
+.nos-txt h2 { margin: 6px 0 0; font-size: clamp(1.7rem, 3.2vw, 2.4rem); font-weight: 800; letter-spacing: -.02em; line-height: 1.15; text-wrap: balance; }
+.nos-txt h2 span { background: linear-gradient(90deg, var(--acc), var(--acc2)); -webkit-background-clip: text; background-clip: text; color: transparent; }
+.nos-txt p { margin: 0; color: var(--muted); max-width: 60ch; }
+.nos-txt p b { color: var(--ink); font-weight: 700; }
+.nos-sello { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 4px; }
+.nos-sello span { display: inline-flex; align-items: center; gap: 8px; padding: 8px 14px; border-radius: 999px; border: 1px solid var(--line); background: var(--panel); font-size: .84rem; font-weight: 600; }
+.nos-sello span i { width: 8px; height: 8px; border-radius: 50%; background: var(--acc); box-shadow: 0 0 0 4px rgb(34 211 238 / .15); }
+.nos-puntos { display: grid; gap: 12px; }
+.nos-punto { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 14px; padding: 18px; border-radius: 16px; background: var(--panel); border: 1px solid var(--line); }
+.nos-punto .ico { width: 42px; height: 42px; border-radius: 12px; display: grid; place-items: center; color: var(--acc); background: rgb(34 211 238 / .08); border: 1px solid rgb(34 211 238 / .3); }
+.nos-punto b { display: block; font-size: .98rem; }
+.nos-punto span { display: block; color: var(--muted); font-size: .88rem; margin-top: 2px; line-height: 1.5; }
+.nos-tabla { margin-top: clamp(32px, 5vw, 48px); border-radius: 18px; border: 1px solid var(--line); background: var(--panel); overflow: hidden; }
+.nos-tabla h3 { margin: 0; padding: 18px 22px; font-size: 1rem; border-bottom: 1px solid var(--line); }
+.nos-fila { display: grid; grid-template-columns: 1.1fr 1fr 1fr; }
+.nos-fila > div { padding: 14px 22px; font-size: .9rem; border-bottom: 1px solid var(--line); min-width: 0; }
+.nos-fila:last-child > div { border-bottom: 0; }
+.nos-fila > div:first-child { color: var(--muted); }
+.nos-fila.cab > div { font-size: .72rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); background: var(--bg); }
+.nos-fila.cab > div:last-child { color: var(--acc); }
+.nos-fila .no { color: var(--down); } .nos-fila .si { color: var(--up); font-weight: 600; }
+@media (max-width: 860px) { .nos-grid { grid-template-columns: 1fr; } }
+@media (max-width: 560px) {
+  .nos-fila { grid-template-columns: 1fr 1fr; }
+  .nos-fila > div:first-child { grid-column: 1 / -1; padding-bottom: 2px; border-bottom: 0; font-weight: 600; color: var(--ink); }
+  .nos-fila.cab > div:first-child { display: none; }
+  .nos-fila > div { padding: 10px 16px; }
+}
 </style>
 </head>
 <body>
@@ -198,6 +231,7 @@ footer .logo svg { width: 30px; height: 30px; }
     <a class="logo" href="#inicio" aria-label="ATTM, inicio"><svg><use href="#iso"/></svg><div><b>ATTM</b><small>TRADING PLATFORM</small></div></a>
     <nav>
       <a class="enl" href="#cuentas">Tipos de cuenta</a>
+      <a class="enl" href="#nosotros">Sobre nosotros</a>
       <a class="enl" href="app/">Iniciar sesión</a>
       <a class="btn chico" href="app/">Crear cuenta</a>
     </nav>
@@ -284,6 +318,35 @@ footer .logo svg { width: 30px; height: 30px; }
 
       </div>
       <p class="nota">Si pierdes una fase, puedes reiniciarla una vez sin regresar a la fase anterior. Para crear tu cuenta necesitas el código de registro que te da tu asesor.</p>
+    </div>
+  </section>
+
+  <section class="seccion nosotros" id="nosotros">
+    <div class="envoltura">
+      <div class="nos-grid">
+        <div class="nos-txt">
+          <span class="etiqueta" style="justify-self:start">Sobre nosotros</span>
+          <h2>Demuestra tu operativa <span>sin arriesgar tu patrimonio.</span></h2>
+          <p><b>ATTM es una plataforma prop:</b> los traders demuestran su operativa superando challenges por fases. <b>No somos un bróker</b>: no te pedimos depositar capital para operar. Pagas un pase y operas una cuenta fondeada por la empresa.</p>
+          <p>Conforme avanzas en los challenges, premiamos tu operativa eficiente con una comisión sobre la ganancia, según tu tipo de cuenta. En un bróker arriesgas un capital grande sin asistencia técnica; aquí operas con reglas claras y con acompañamiento.</p>
+          <div class="nos-sello"><span><i></i>Nueva en México</span><span><i></i>6 años de experiencia internacional</span></div>
+        </div>
+        <div class="nos-puntos">
+          <div class="nos-punto"><span class="ico"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="6" width="18" height="12" rx="2"/><path d="M3 10h18M7 15h3"/></svg></span><div><b>Pagas un pase, no un fondeo</b><span>Solo pagas el pase para iniciar tu challenge. El capital que operas lo pone la empresa.</span></div></div>
+          <div class="nos-punto"><span class="ico"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 10 12 5 2 10l10 5 10-5Z"/><path d="M6 12v5c0 1 3 3 6 3s6-2 6-3v-5"/></svg></span><div><b>Aprendizaje gratuito con mentor</b><span>Tienes la parte educativa y la asistencia de un mentor sin costo adicional.</span></div></div>
+          <div class="nos-punto"><span class="ico"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 11l3 3 8-8"/><path d="M20 12v7a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h9"/></svg></span><div><b>Analistas que auditan contigo</b><span>Nuestros analistas supervisan tu operativa mediante auditorías que revisan junto contigo.</span></div></div>
+          <div class="nos-punto"><span class="ico"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg></span><div><b>Te premiamos por operar bien</b><span>Una comisión por ganancia que depende de tu tipo de cuenta: hasta el 80 % en ALPHA.</span></div></div>
+        </div>
+      </div>
+      <div class="nos-tabla">
+        <h3>ATTM frente a un bróker tradicional</h3>
+        <div class="nos-fila cab"><div></div><div>Bróker tradicional</div><div>ATTM</div></div>
+        <div class="nos-fila"><div>Lo que pagas para operar</div><div class="no">Depositas tu propio capital</div><div class="si">Solo el pase del challenge</div></div>
+        <div class="nos-fila"><div>Capital que operas</div><div>El tuyo</div><div class="si">Fondeado por la empresa</div></div>
+        <div class="nos-fila"><div>Asistencia técnica</div><div class="no">Ninguna</div><div class="si">Mentor y analistas</div></div>
+        <div class="nos-fila"><div>Aprendizaje</div><div>Por tu cuenta</div><div class="si">Gratuito</div></div>
+        <div class="nos-fila"><div>Revisión de tu operativa</div><div class="no">No hay</div><div class="si">Auditorías junto contigo</div></div>
+      </div>
     </div>
   </section>
 
